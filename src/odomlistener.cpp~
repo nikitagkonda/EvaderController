@@ -1,0 +1,23 @@
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "nav_msgs/Odometry.h"
+
+
+void odomCallback(nav_msgs::Odometry msg)
+{
+  float px=msg.pose.pose.position.x;
+  ROS_INFO("I heard: [%f]", px);
+}
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "odomlistener");
+
+  ros::NodeHandle n;
+
+  ros::Subscriber sub = n.subscribe<nav_msgs::Odometry>("odom", 1000, odomCallback);
+
+  ros::spin();
+
+  return 0;
+}
